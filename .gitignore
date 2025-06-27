@@ -1,0 +1,4 @@
+*.exe
+eo-websocket-proxy
+*.log
+.env

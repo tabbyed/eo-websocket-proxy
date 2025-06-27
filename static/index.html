@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EO Bridge Control Panel</title>
+
+  <!-- Pixel-art style font -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🌐 EO Bridge Control Panel</h1>
+
+    <div class="status stopped" id="status">
+      🔴 Bridge Stopped
+    </div>
+
+    <form id="bridgeForm">
+      <div class="form-group">
+        <label for="port">WebSocket Port:</label>
+        <input type="number" id="port" name="port" value="8080" min="1" max="65535">
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="discovery">
+        <label for="discovery">Use server discovery</label>
+        <button type="button" id="refreshBtn" class="refresh-btn">Refresh Servers</button>
+      </div>
+
+      <div class="form-group">
+        <label for="server">Game Server:</label>
+        <select id="serverSelect" class="hidden">
+          <option value="">Select a server...</option>
+        </select>
+        <input type="text" id="manualServer" name="server" value="gameserver.ddns.eo-rs.dev:8078" placeholder="gameserver.ddns.eo-rs.dev:8078">
+      </div>
+
+      <div class="form-group">
+        <button type="button" id="startBtn">Start Bridge</button>
+        <button type="button" id="stopBtn" class="btn-danger hidden">Stop Bridge</button>
+      </div>
+    </form>
+
+    <div class="info">
+      <strong>How to use:</strong><br>
+      1. Set your WebSocket port (default: 8080)<br>
+      2. Choose server discovery or enter manually<br>
+      3. Click Start Bridge<br>
+      4. Connect browsers to: <code>ws://localhost:[port]</code>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
