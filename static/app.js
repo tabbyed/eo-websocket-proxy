@@ -49,19 +49,28 @@ class BridgeController {
     }
 
     updateUIState(isRunning) {
-        const controls = [this.portInput, this.discoveryCheck, this.manualServer];
+        const controls = [this.portInput, this.discoveryCheck];
         
         if (isRunning) {
+            // Disable all controls when running
             controls.forEach(el => el.disabled = true);
             this.serverSelect.disabled = true;
+            this.manualServer.disabled = true;
             this.startBtn.style.display = 'none';
             this.stopBtn.style.display = 'inline-block';
         } else {
+            // Re-enable controls when stopped
             controls.forEach(el => el.disabled = false);
+            
+            // Set server input states based on discovery checkbox
             if (this.discoveryCheck.checked) {
                 this.serverSelect.disabled = false;
                 this.manualServer.disabled = true;
+            } else {
+                this.serverSelect.disabled = true;
+                this.manualServer.disabled = false;
             }
+            
             this.startBtn.style.display = 'inline-block';
             this.stopBtn.style.display = 'none';
         }
@@ -192,17 +201,16 @@ class BridgeController {
     }
 
     showError(message) {
-        // Simple alert for now - could be replaced with toast notifications
         alert(`Error: ${message}`);
     }
 
     showSuccess(message) {
-        // Simple alert for now - could be replaced with toast notifications
+        // Simple alert for now ;p
         console.log(`Success: ${message}`);
     }
 }
 
-// Initialize the app when DOM is loaded
+
 document.addEventListener('DOMContentLoaded', () => {
     new BridgeController();
 });
