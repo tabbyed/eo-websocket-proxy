@@ -7,68 +7,103 @@
 
 body {
   font-family: 'Press Start 2P', monospace;
-  background: #121212 url('/gfx/bg.jpg') repeat;
-  color: #f5e9da;
+  background: linear-gradient(135deg, #171717 0%, #2c2c2c 40%, #1c1c1c 100%);
+  background-attachment: fixed;
+  color: #e8dcc6;
   padding: 20px;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+}
+
+/* Ornamental overlay */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 30%, rgba(245, 222, 179, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: -1;
 }
 
 /* Container */
 .container {
-  max-width: 600px;
+  max-width: 680px;
   width: 100%;
-  background: #1e1e1e;
-  border: 4px solid #d6c68a;
-  box-shadow: 0 0 0 4px #4c4c4c;
-  border-radius: 4px;
+  background: linear-gradient(145deg, #3a3a3a, #1f1f1f);
+  border: 2px solid #d4af37;
+  border-radius: 6px;
+  box-shadow:
+    0 0 0 1px #444,
+    0 8px 24px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
   padding: 32px;
+  position: relative;
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  right: 6px;
+  bottom: 6px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 4px;
+  pointer-events: none;
 }
 
 /* Header */
 h1 {
-  color: #fff8d6;
+  color: #d4af37;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 28px;
   font-size: 14px;
-  text-shadow: 1px 1px #000;
+  text-shadow: 1px 1px 3px #000;
+  letter-spacing: 0.5px;
 }
 
 /* Status Boxes */
 .status {
-  padding: 15px;
-  border-radius: 4px;
-  margin-bottom: 25px;
+  padding: 14px 18px;
+  border-radius: 6px;
+  margin-bottom: 24px;
   font-weight: bold;
   text-align: center;
   font-size: 10px;
   border: 2px solid transparent;
+  background: #2a2a2a;
+  text-shadow: 1px 1px 2px #000;
 }
 
 .status.running {
-  background: #003300;
-  color: #00ff00;
-  border-color: #00cc00;
+  background: linear-gradient(145deg, #2f4f2f, #3e6645);
+  color: #a5d6a7;
+  border-color: #81c784;
 }
 
 .status.stopped {
-  background: #330000;
-  color: #ff5555;
-  border-color: #cc0000;
+  background: linear-gradient(145deg, #5e1f1f, #7f2e2e);
+  color: #f2bfbf;
+  border-color: #ef5350;
 }
 
 /* Form Groups */
 .form-group {
-  margin-bottom: 25px;
+  margin-bottom: 24px;
 }
 
 label {
   display: block;
   margin-bottom: 6px;
-  color: #e8dcb6;
+  color: #d4af37;
   font-size: 10px;
+  text-shadow: 1px 1px 1px #000;
 }
 
 /* Inputs */
@@ -76,99 +111,110 @@ input[type="text"],
 input[type="number"],
 select {
   width: 100%;
-  padding: 10px;
+  padding: 10px 14px;
   font-size: 10px;
-  background: #2d2d2d;
-  color: #ffffff;
-  border: 2px solid #4c4c4c;
+  background: #2c2c2c;
+  color: #e8dcc6;
+  border: 2px solid #5c4422;
   border-radius: 4px;
   font-family: 'Press Start 2P', monospace;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 input:focus,
 select:focus {
   outline: none;
-  border-color: #d6c68a;
-  background: #383838;
+  border-color: #d4af37;
+  background: #1e1e1e;
+  box-shadow: 0 0 6px rgba(212, 175, 55, 0.4);
 }
 
 /* Buttons */
 button {
-  background: #2e2e2e;
-  color: #e6d690;
-  border: 2px solid #d6c68a;
+  background: linear-gradient(145deg, #5c4422, #3e2f1b);
+  color: #f0e6c8;
+  border: 2px solid #a67c00;
   padding: 10px 18px;
   font-size: 10px;
   font-family: 'Press Start 2P', monospace;
   cursor: pointer;
-  box-shadow: 0 2px 0 #4c4c4c;
+  border-radius: 4px;
   margin-right: 10px;
+  transition: all 0.2s ease;
+  text-shadow: 1px 1px 2px #000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
 button:hover {
-  background: #3e3e3e;
-  box-shadow: 0 0 0 2px #fff8d6;
-  color: #ffffff;
+  background: linear-gradient(145deg, #7f5f2d, #5c4422);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5);
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 button:disabled {
-  opacity: 0.5;
+  background: #444;
+  color: #999;
   cursor: not-allowed;
 }
 
-/* Danger & Special Buttons */
+/* Special Buttons */
 .btn-danger {
-  background: #5a0000;
-  border-color: #ff4444;
-  color: #ffbbbb;
+  background: linear-gradient(145deg, #7c1f1f, #4a1a1a);
+  border-color: #a10000;
+  color: #f4c7c3;
 }
 
 .refresh-btn {
-  background: #003a2b;
-  border-color: #33ffaa;
-  color: #99ffcc;
+  background: linear-gradient(145deg, #2a4b2a, #1e3921);
+  border-color: #4caf50;
+  color: #c8e6c9;
 }
 
 /* Checkbox Section */
 .checkbox-group {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   margin-bottom: 20px;
-  padding: 12px;
-  background: #262626;
-  border-radius: 4px;
-  border: 2px solid #555;
+  padding: 14px 16px;
+  background: #2c2c2c;
+  border-radius: 6px;
+  border: 2px solid #5c4422;
 }
 
 .checkbox-group input[type="checkbox"] {
-  transform: scale(1.1);
-  accent-color: #d6c68a;
+  transform: scale(1.2);
+  accent-color: #d4af37;
 }
 
 .checkbox-group label {
-  margin: 0;
-  cursor: pointer;
-  user-select: none;
   font-size: 10px;
+  color: #e8dcc6;
 }
 
 /* Info Section */
 .info {
   background: #1f1f1f;
-  border-left: 4px solid #d6c68a;
+  border-left: 4px solid #d4af37;
+  border-radius: 6px;
   padding: 20px;
-  border-radius: 4px;
-  margin-top: 25px;
-  line-height: 1.6;
+  margin-top: 24px;
   font-size: 10px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .info code {
-  background: #2c2c2c;
+  background: #333;
+  color: #d4af37;
   padding: 2px 6px;
-  border-radius: 2px;
-  color: #f0c755;
+  border-radius: 3px;
+  font-weight: bold;
 }
 
 /* Utility */
@@ -176,27 +222,24 @@ button:disabled {
   display: none;
 }
 
-/* Mobile Responsive */
+/* Mobile */
 @media (max-width: 768px) {
-  .container {
-    padding: 24px;
-    margin: 10px;
+  body {
+    padding: 12px;
   }
 
-  h1 {
-    font-size: 12px;
+  .container {
+    padding: 24px;
   }
 
   button {
+    width: 100%;
     margin-bottom: 10px;
+    margin-right: 0;
   }
 
   .checkbox-group {
     flex-direction: column;
     align-items: flex-start;
-  }
-
-  .refresh-btn {
-    margin-left: 0;
   }
 }

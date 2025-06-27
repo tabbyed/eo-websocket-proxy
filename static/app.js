@@ -1,3 +1,4 @@
+// Main controller for the EO Bridge web interface
 class BridgeController {
     constructor() {
         this.initElements();
@@ -30,6 +31,7 @@ class BridgeController {
         await this.loadServers();
     }
 
+    // Poll bridge status every 2 seconds
     startStatusUpdates() {
         setInterval(() => this.updateStatus(), 2000);
     }
@@ -57,7 +59,9 @@ class BridgeController {
             this.serverSelect.disabled = true;
             this.manualServer.disabled = true;
             this.startBtn.style.display = 'none';
+            this.startBtn.disabled = true;
             this.stopBtn.style.display = 'inline-block';
+            this.stopBtn.disabled = false;
         } else {
             // Re-enable controls when stopped
             controls.forEach(el => el.disabled = false);
@@ -71,8 +75,11 @@ class BridgeController {
                 this.manualServer.disabled = false;
             }
             
+            // Ensure buttons are properly enabled/disabled when stopped
             this.startBtn.style.display = 'inline-block';
+            this.startBtn.disabled = false;
             this.stopBtn.style.display = 'none';
+            this.stopBtn.disabled = true;
         }
     }
 
@@ -94,6 +101,7 @@ class BridgeController {
         }
     }
 
+    // Toggle between server discovery and manual input
     toggleDiscovery() {
         if (this.discoveryCheck.checked) {
             this.serverSelect.style.display = 'block';
@@ -114,6 +122,7 @@ class BridgeController {
         }
     }
 
+    // Start the bridge with validation
     async startBridge() {
         const port = parseInt(this.portInput.value);
         const server = this.manualServer.value;
@@ -201,16 +210,17 @@ class BridgeController {
     }
 
     showError(message) {
+        // Simple alert for now - could be replaced with toast notifications
         alert(`Error: ${message}`);
     }
 
     showSuccess(message) {
-        // Simple alert for now ;p
+        // Simple alert for now - could be replaced with toast notifications
         console.log(`Success: ${message}`);
     }
 }
 
-
+// Initialize the app when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new BridgeController();
 });

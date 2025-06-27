@@ -288,20 +288,20 @@ func (a *App) handleAPIRefreshServers(w http.ResponseWriter, r *http.Request) {
 func main() {
 	app := &App{controlPort: 8081}
 
-	// if startup then try to load servers
+	// Attempt to load available servers at startup
 	app.fetchServers()
 
-	// if static files then serve from ./static/
+	// Serve static assets (CSS, JS, etc.) from ./static/
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
 
-	// if API calls then route to handlers
+	// API endpoints
 	http.HandleFunc("/api/status", app.handleAPIStatus)
 	http.HandleFunc("/api/servers", app.handleAPIServers)
 	http.HandleFunc("/api/start", app.handleAPIStart)
 	http.HandleFunc("/api/stop", app.handleAPIStop)
 	http.HandleFunc("/api/refresh-servers", app.handleAPIRefreshServers)
 
-	// if root request then serve index.html
+	// Serve index.html for root path only
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path != "/" {
 			http.NotFound(w, r)
@@ -310,8 +310,10 @@ func main() {
 		http.ServeFile(w, r, "./static/index.html")
 	})
 
-	// if server start then listen and serve
-	if err := http.ListenAndServe(fmt.Sprintf(":%d", app.controlPort), nil); err != nil {
+	// Log and start control server
+	addr := fmt.Sprintf(":%d", app.controlPort)
+	log.Printf("Starting control panel on http://localhost%s", addr)
+	if err := http.ListenAndServe(addr, nil); err != nil {
 		log.Fatalf("Control panel failed: %v", err)
 	}
 }
